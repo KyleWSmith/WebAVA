@@ -104,7 +104,16 @@ p {
             var avas = L.geoJSON(avadata.responseJSON, {style: featureStyle}).addTo(map);
         });
         
-        
+     var searchControl = new L.Control.Search({
+		layer: avadata,
+		propertyName: 'name',
+		marker: false,
+		moveToLocation: function(latlng, title, map) {
+			//map.fitBounds( latlng.layer.getBounds() );
+			var zoom = map.getBoundsZoom(latlng.layer.getBounds());
+  			map.setView(latlng, zoom); // access the zoom
+		}
+	});   
     </script>
 </body>
 
