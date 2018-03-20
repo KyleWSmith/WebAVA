@@ -72,7 +72,7 @@ p {
     <div id="map" class="col-md-9"></div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
-   <script src="../WebAVA/src/leaflet-search.js"></script>
+   <script src="http://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.js"></script>
     <script>
         var avadata = $.ajax({
             url: "https://raw.githubusercontent.com/UCDavisLibrary/ava/master/avas.geojson",
@@ -114,6 +114,24 @@ p {
   			map.setView(latlng, zoom); // access the zoom
 		}
 	});   
+searchControl.on('search:locationfound', function(e) {
+		
+		//console.log('search:locationfound', );
+
+		//map.removeLayer(this._markerSearch)
+
+		e.layer.setStyle({fillColor: '#3f0', color: '#0f0'});
+		if(e.layer._popup)
+			e.layer.openPopup();
+
+	}).on('search:collapsed', function(e) {
+
+		featuresLayer.eachLayer(function(layer) {	//restore feature color
+			featuresLayer.resetStyle(layer);
+		});	
+	});
+	
+	map.addControl( searchControl );  //inizialize search control
     </script>
 </body>
 
